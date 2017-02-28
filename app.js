@@ -33,7 +33,6 @@ plantsRef.orderByChild("plantname").on("child_added", function(snapshot, prevChi
 
 
 app.get("/", function(req, res){
-
  	res.render("landing.ejs", {plantsArr: plantsArr});
 });
 

@@ -2,7 +2,9 @@
 
 <ul>
 	<% plantsArr.forEach(function(plant){ %>
-		<li><%= plant.name %></li>
+		<li><%= plant.name %> - <i><%= plant.scientificname %></i>
+			<img src="<%= plant.imageurl%>">
+		</li>
 	<% }); %>
 </ul>
 
