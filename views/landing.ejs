@@ -1,9 +1,9 @@
 <h1> landing page </h1>
 
 <ul>
-	<li>item1</li>
-	<li>item2</li>
-	<li>item3</li>
+	<% plantsArr.forEach(function(plant){ %>
+		<li><%= plant.name %></li>
+	<% }); %>
 </ul>
 
 <a href="/newplant">Create a new plant</a>
