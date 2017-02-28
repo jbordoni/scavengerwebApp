@@ -66,6 +66,23 @@ app.post("/newplant", function(req, res){
 	res.redirect("/");
 });
 
+app.get("/plant/:id", function(req, res){
+	var requestedId = req.params.id;
+	var specificRef = plantsRef.child(requestedId);
+	specificRef.once("value", function(snapshot){
+		res.render("plant.ejs", {plantInfo: snapshot.val()});
+	});
+});
+
+
+//JSON ENDPOINT FOR SPECIFIC PLANT ID
+// app.get("/plant/:id.json", function(req, res){
+// 	var specificRef = plantsRef.child(req.params.id);
+// 	specificref.once("value", function(snapshot){
+// 		res.send(snapshot.val());
+// 	});
+// });
+
 app.get("/newuser", function(req, res){
 	res.render("newuser.ejs");
 });
@@ -84,6 +101,7 @@ app.get("/users", function(req, res){
 	res.render("users.ejs", {usersArr: usersArr});
 });
 
+//JSON ENDPOINT FOR USER DATA
 app.get("/users.json", function(req,res){
 	res.send(JSON.stringify(usersArr));
 });
