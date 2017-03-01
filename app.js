@@ -46,7 +46,7 @@ app.get("/", function(req, res){
 
 
 //JSON ENDPOINT FOR ALL PLANT DATA
-app.get("/.json", function(req,res){
+app.get("/json", function(req,res){
 	res.send(JSON.stringify(plantsArr));
 });
 
@@ -76,12 +76,12 @@ app.get("/plant/:id", function(req, res){
 
 
 //JSON ENDPOINT FOR SPECIFIC PLANT ID
-// app.get("/plant/:id.json", function(req, res){
-// 	var specificRef = plantsRef.child(req.params.id);
-// 	specificref.once("value", function(snapshot){
-// 		res.send(snapshot.val());
-// 	});
-// });
+app.get("/plant/:id/json", function(req, res){
+	var specificRef = plantsRef.child(req.params.id);
+	specificRef.once("value", function(snapshot){
+		res.send(snapshot.val());
+	});
+});
 
 app.get("/newuser", function(req, res){
 	res.render("newuser.ejs");
@@ -102,7 +102,7 @@ app.get("/users", function(req, res){
 });
 
 //JSON ENDPOINT FOR USER DATA
-app.get("/users.json", function(req,res){
+app.get("/users/json", function(req,res){
 	res.send(JSON.stringify(usersArr));
 });
 
