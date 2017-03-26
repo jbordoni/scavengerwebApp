@@ -54,8 +54,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     newUserArea.style.display = "none";
 	signOutButton.style.display = "";	
 	showPlantsButton.style.display = "";
-	
-
   } else {
     currentUser = null;
     showPlantsButton.style.display = "none";
@@ -67,7 +65,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-
+//BUTTON ON/OFF CONTROLLERS
 signInUserButton.addEventListener("click", function(){
 	newPlantArea.style.display = "none";
 	signInArea.style.display = "";
@@ -86,6 +84,8 @@ signUpUserButton.addEventListener("click", function(){
 	signInArea.style.display = "none";
 });
 
+
+//ADDING A NEW PLANT
 submitButton.addEventListener("click", function(){
 	var filesSelected = document.getElementById("fileInput").files;
 	var fileToLoad = filesSelected[0];
@@ -155,8 +155,9 @@ signOutButton.addEventListener("click", function(){
 	});
 });
 
-var initialValuesSet = false;
 
+//UPDATES AND INITIAL INFO PULL
+var initialValuesSet = false;
 plantsRef.on('value', function(snapshot){
 	if(!initialValuesSet){
 		snapshot.forEach(function(data){
