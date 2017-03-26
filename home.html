@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="home.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+    <script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyCdSpDQHYkxhCeZFT9JJF4B-AIQBs4Z7Zo",
+	    authDomain: "scavenger-7165d.firebaseapp.com",
+	    databaseURL: "https://scavenger-7165d.firebaseio.com",
+	    storageBucket: "gs://scavenger-7165d.appspot.com",
+	    messagingSenderId: "198217203971"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+
+  </head>
+  <body>
+    <div id="map">
+    </div>
+    <div id="sidebar" class="container">
+    	<div id="listarea">
+    		<h1>Scavenger <span id="currUserLabel"></span></h1>
+    		<h2>Plants around you</h2>
+    		<h3 id="updateavail">Updates Available</h3>
+    		<ol id="plantlist">
+
+    		</ol>
+    	</div>
+        <div id="buttons-area">
+            <button class="btn btn-default" id="showPlantsButton">Plant Form</button>
+            <button class="btn btn-default" id="signInUserButton">Sign In</button>
+            <button class="btn btn-default" id="signUpUserButton">Sign Up</button>
+            <button class="btn btn-default" id="signOutButton" display="none">Sign Out</button>
+        </div>
+    	<div id="newplantarea">
+    		<h2>Add New Plant</h2>
+    		<form name="plantform">
+				<input type="text" class="form-control" name="plantname" placeholder="plant name">
+				<br>
+				<input type="text" class="form-control" name="sciname" placeholder="scientific name">
+				<br><br>
+				<input type="file" id="fileInput" accept="image/*">
+				<br><br>
+				<input type="number" class="form-control" name="longitude" placeholder="longitude" step="0.000001">	
+				<input type="number" class="form-control" name="latitude" placeholder="latitude" step="0.000001">
+				<br><br>
+				<input type="text" class="form-control" name="desc" placeholder="description" height="5" width="50">
+				<br><br>
+                <input type="button" class="btn btn-default" id="submitPlant" value="Submit">
+    		</form>
+    	</div>
+        <div id="newuserarea">
+            <h2>Create New User</h2>
+            <form name="newuserform">
+                <input type="text" class="form-control" name="email" placeholder="email">
+                <br>
+                <input type ="password" class="form-control" name="password" placeholder="password">
+                <br>
+                <input type="button" class="btn btn-default" id="submitNewUser" value="Create New User">
+            </form>
+        </div>
+        <div id="signinarea">
+            <h2>Sign In</h2>
+            <form name="signinform">
+                <input type="text" class="form-control" name="email" placeholder="email">
+                <br>
+                <input type ="password" class="form-control" name="password" placeholder="password">
+                <br>
+                <input type="button" class="btn btn-default" id="submitSignIn" value="Sign In">
+            </form>
+        </div>
+
+    </div>
+
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQW3LF-fXuOs1OMEGQIlniUuWQluo6hLc&callback=initMap">
+    </script>
+    <script type="text/javascript" src="app.js"></script>
+  </body>
+</html>
+
+
+
+
+
