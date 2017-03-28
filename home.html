@@ -5,7 +5,10 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="home.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <script src="https://use.typekit.net/cke8vzm.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
 
 
     <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
@@ -23,12 +26,18 @@
 
   </head>
   <body>
-    <div id="map">
+    <nav>
+    <div class="nav-wrapper teal darken-3">
+      <a href="#" class="brand-logo" id="scavengerlogo"> SCAVENGER</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
     </div>
+  </nav>
     <div id="sidebar" class="container">
     	<div id="listarea">
-    		<h1>Scavenger <span id="currUserLabel"></span></h1>
-    		<h2>Plants around you</h2>
     		<h3 id="updateavail">Updates Available</h3>
     		<ol id="plantlist">
 
@@ -78,6 +87,8 @@
             </form>
         </div>
 
+    </div>
+    <div id="map">
     </div>
 
 	<script async defer

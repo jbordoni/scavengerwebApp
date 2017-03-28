@@ -14,7 +14,7 @@ var submitButton = document.getElementById("submitPlant");
 var updateavail = document.getElementById("updateavail");
 var submitSignIn = document.getElementById("submitSignIn");
 var submitNewUser = document.getElementById("submitNewUser");
-var currUserLabel = document.getElementById("currUserLabel");
+
 
 var currInfoWindow;
 var currentUser;
@@ -47,7 +47,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     var uid = user.uid;
     var providerData = user.providerData;
 
-    currUserLabel.innerHTML = user.email;
+    
 	signInUserButton.style.display = "none";
 	signUpUserButton.style.display = "none";
 	signInArea.style.display = "none";
@@ -59,7 +59,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     showPlantsButton.style.display = "none";
     signInUserButton.style.display = "";
     signUpUserButton.style.display = "";
-    currUserLabel.innerHTML = "";
     signOutButton.style.display = "none";
     newPlantArea.style.display = "none";
   }
