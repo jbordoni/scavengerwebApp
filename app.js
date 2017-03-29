@@ -33,6 +33,10 @@ newUserArea.style.display = "none";
 newPlantArea.style.display = "none";
 signInArea.style.display = "none";
 
+ $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+ });
 
 //USER UPDATES
 firebase.auth().onAuthStateChanged(function(user) {
@@ -50,7 +54,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     
 	signInUserButton.style.display = "none";
 	signUpUserButton.style.display = "none";
-	signInArea.style.display = "none";
+	$('#signinarea').modal('close');
+	$('#newuserarea').modal('close');
     newUserArea.style.display = "none";
 	signOutButton.style.display = "";	
 	showPlantsButton.style.display = "";
@@ -65,11 +70,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 //BUTTON ON/OFF CONTROLLERS
-signInUserButton.addEventListener("click", function(){
-	newPlantArea.style.display = "none";
-	signInArea.style.display = "";
-	newUserArea.style.display = "none";
-});
 
 showPlantsButton.addEventListener("click", function(){
 	newPlantArea.style.display = "";
