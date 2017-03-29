@@ -49,6 +49,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     var displayName = user.displayName;
     var email = user.email;
     var emailVerified = user.emailVerified;
+    if (emailVerified == false){
+    	console.log("user has not verified");
+    	user.sendEmailVerification();
+    }
     var photoURL = user.photoURL;
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
