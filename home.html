@@ -5,7 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="home.css">
-
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
 
     <script src="https://use.typekit.net/cke8vzm.js"></script>
@@ -33,6 +33,7 @@
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li id="signInUserButton"><a class="waves-effect waves-light btn" href="#signinarea">Sign In</a></li>
         <li id="signUpUserButton"><a class="waves-effect waves-light btn" href="#newuserarea">Sign Up</a></li>
+        <li id="signOutButton"><a class="waves-effect waves-light btn">Sign Out</a></li>
       </ul>
     </div>
   </nav>
@@ -71,15 +72,14 @@
 
     <div id="sidebar" class="container">
     	<div id="listarea">
-    		<h3 id="updateavail">Updates Available</h3>
+    		<h5 id="updateavail">Updates Available</h5>
     		<ol id="plantlist">
 
     		</ol>
     	</div>
-        <div id="buttons-area">
+<!--         <div id="buttons-area">
             <button class="btn btn-default" id="showPlantsButton">Plant Form</button>
-            <button class="btn btn-default" id="signOutButton" display="none">Sign Out</button>
-        </div>
+        </div> -->
     	<div id="newplantarea">
     		<h2>Add New Plant</h2>
     		<form name="plantform">
@@ -102,6 +102,7 @@
         </div>
 
     </div>
+    <a id="showPlantsButton" class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>
     <div id="map">
     </div>
 

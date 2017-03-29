@@ -50,8 +50,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
     var providerData = user.providerData;
-
-    
+    document.forms["signinform"]["email"].value = "";
+    document.forms["signinform"]["password"].value = "";
+    document.forms["newuserform"]["email"].value = "";
+    document.forms["newuserform"]["password"].value = "";
 	signInUserButton.style.display = "none";
 	signUpUserButton.style.display = "none";
 	$('#signinarea').modal('close');
@@ -59,6 +61,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     newUserArea.style.display = "none";
 	signOutButton.style.display = "";	
 	showPlantsButton.style.display = "";
+
   } else {
     currentUser = null;
     showPlantsButton.style.display = "none";

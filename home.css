@@ -35,3 +35,9 @@ html, body {
   font-family: Refrigerator Deluxe;
   padding-left: 20px;
 }
+
+#showPlantsButton {
+  position: fixed;
+  right: 50px;
+  bottom: 20px;
+}
