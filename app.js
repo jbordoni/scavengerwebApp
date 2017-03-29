@@ -15,6 +15,7 @@ var submitButton = document.getElementById("submitPlant");
 var updateavail = document.getElementById("updateavail");
 var submitSignIn = document.getElementById("submitSignIn");
 var submitNewUser = document.getElementById("submitNewUser");
+var submitEmailForPassword = document.getElementById("submitEmailForPassword");
 
 var geoFire = new GeoFire(geoFireRef);
 
@@ -87,6 +88,8 @@ signUpUserButton.addEventListener("click", function(){
 	newPlantArea.style.display = "none";
 	signInArea.style.display = "none";
 });
+
+
 
 
 //ADDING A NEW PLANT
@@ -174,6 +177,19 @@ submitSignIn.addEventListener("click", function(){
 	  var errorMessage = error.message;
 	  // ...
 	});
+});
+
+//FORGOTTEN PASSWORD
+submitEmailForPassword.addEventListener("click", function(){
+	console.log("send email button pressed");
+	var email = document.forms["forgotpasswordform"]["email"].value;
+	firebase.auth().sendPasswordResetEmail(email).then(function() {
+	  // Email sent.
+	  $('#forgotpasswordarea').modal('close');
+	}, function(error) {
+	  // An error happened.
+	});
+	
 });
 
 
