@@ -13,17 +13,20 @@ html, body {
 }
 
 #sidebar {
-  background: green;
+  background: #004d40;
   float: left;
-  min-height: 93%;
+  max-height: 93%;
+  overflow: auto;
   width: 30%;
-  color: white;
+  padding-left:20px;
+  padding-right:20px;
+  color:white;
 }
 
 #listarea {
   height: 65%;
   width: 100%;
-  color: white;
+  color: black;
 }
 
 #updateavail {
