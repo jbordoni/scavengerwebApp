@@ -1,6 +1,7 @@
 
 var dbRef = firebase.database().ref();
 var plantsRef = firebase.database().ref('plants');
+var geoFireRef = firebase.database().ref('plant_location');
 
 var storage = firebase.storage();
 var storageRef = storage.ref();
@@ -15,6 +16,7 @@ var updateavail = document.getElementById("updateavail");
 var submitSignIn = document.getElementById("submitSignIn");
 var submitNewUser = document.getElementById("submitNewUser");
 
+var geoFire = new GeoFire(geoFireRef);
 
 var currInfoWindow;
 var currentUser;
@@ -92,31 +94,61 @@ submitButton.addEventListener("click", function(){
 	var filesSelected = document.getElementById("fileInput").files;
 	var fileToLoad = filesSelected[0];
 	var postKey = plantsRef.push().key;
-	var filename = fileToLoad.name;
-	var extension = filename.substr(filename.lastIndexOf('.')+1);
-	var path = postKey + "." + extension;
-	var fileRef = photosRef.child(path);
-
-	fileRef.put(fileToLoad).then(function(snapshot) {
-  		console.log('Uploaded a blob or file!');
-  		var imgurl = snapshot.downloadURL;
+	var lat = document.forms["plantform"]["latitude"].value;
+	var lng = document.forms["plantform"]["longitude"].value;
+	if (fileToLoad == null){
   		var plantObject = {
 			plantName: document.forms["plantform"]["plantname"].value,
 			sciName: document.forms["plantform"]["sciname"].value,
-			imgurl: imgurl,
+			imgurl: null,
 			userId: currentUser.uid,
-			longitude: document.forms["plantform"]["longitude"].value,
-			latitude: document.forms["plantform"]["latitude"].value,
+			longitude: lng,
+			latitude: lat,
 			desc: document.forms["plantform"]["desc"].value
 		};
-
 		var update = {};
 		update[postKey] = plantObject;
 		console.log(plantsRef.update(update));
-	});
+		geoFire.set(postKey, [parseFloat(lat), parseFloat(lng)]);
+		resetPlantArea();
 
+	} else {
+		var filename = fileToLoad.name;
+		var extension = filename.substr(filename.lastIndexOf('.')+1);
+		var path = postKey + "." + extension;
+		var fileRef = photosRef.child(path);
 
+		fileRef.put(fileToLoad).then(function(snapshot) {
+	  		console.log('Uploaded a blob or file!');
+	  		var imgurl = snapshot.downloadURL;
+	  		var plantObject = {
+				plantName: document.forms["plantform"]["plantname"].value,
+				sciName: document.forms["plantform"]["sciname"].value,
+				imgurl: imgurl,
+				userId: currentUser.uid,
+				longitude: lng,
+				latitude: lat,
+				desc: document.forms["plantform"]["desc"].value
+			};
+
+			var update = {};
+			update[postKey] = plantObject;
+			console.log(plantsRef.update(update));
+			geoFire.set(postKey, [parseFloat(lat), parseFloat(lng)]);
+			resetPlantArea();
+		});
+	}
 });
+
+function resetPlantArea(){
+	$('#newplantarea').modal('close');
+	document.forms["plantform"]["plantname"].value = "";
+	document.forms["plantform"]["sciname"].value = "";
+	document.forms["plantform"]["longitude"].value = "";
+	document.forms["plantform"]["latitude"].value = "";
+	document.forms["plantform"]["desc"].value = "";
+	document.getElementById("fileInput").value = "";
+}
 
 
 //NEW USER SIGN UP
@@ -184,12 +216,14 @@ plantsRef.on('value', function(snapshot){
 });
 
 
+
 function createMarker(plantObject) {
 	var position = {lat: parseFloat(plantObject.latitude), lng: parseFloat(plantObject.longitude)};
 	var marker = new google.maps.Marker({
 		position: position,
 		map: map,
-		title: plantObject.plantName
+		title: plantObject.plantName,
+		icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090'
 	});
 	marker.addListener('mouseover', function(){
 		currInfoWindow.setContent(marker.title);
@@ -210,12 +244,10 @@ function displayPlants(){
 }
 
 
-var map;
-
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
-	  center: {lat: -34.397, lng: 150.644},
-	  zoom: 4
+	  center: {lat: 33.753746, lng: -84.386330},
+	  zoom: 12
 	});
 
 	var infoWindow = new google.maps.InfoWindow({map: map});
@@ -233,6 +265,7 @@ function initMap() {
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             map.setCenter(pos);
+            map.setZoom(15);
             document.forms["plantform"]["longitude"].value = pos.lng;
             document.forms["plantform"]["latitude"].value = pos.lat;
           }, function() {

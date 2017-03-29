@@ -65,9 +65,32 @@
                 <input type="button" class="btn btn-default" id="submitNewUser" value="Create New User">
             </form>
     </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
     </div>
+
+    <div id="newplantarea" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h2>Add New Plant</h2>
+            <form name="plantform">
+                <input type="text" class="form-control" name="plantname" placeholder="plant name">
+                <br>
+                <input type="text" class="form-control" name="sciname" placeholder="scientific name">
+                <br><br>
+                <input type="file" id="fileInput" accept="image/*">
+                <br><br>
+                <input type="number" class="form-control" name="longitude" placeholder="longitude" step="0.000001"> 
+                <input type="number" class="form-control" name="latitude" placeholder="latitude" step="0.000001">
+                <br><br>
+                <input type="text" class="form-control" name="desc" placeholder="description" height="5" width="50">
+                <br><br>
+                <input type="button" class="btn btn-default" id="submitPlant" value="Submit">
+            </form>
+    </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
     </div>
 
     <div id="sidebar" class="container">
@@ -77,38 +100,15 @@
 
     		</ol>
     	</div>
-<!--         <div id="buttons-area">
-            <button class="btn btn-default" id="showPlantsButton">Plant Form</button>
-        </div> -->
-    	<div id="newplantarea">
-    		<h2>Add New Plant</h2>
-    		<form name="plantform">
-				<input type="text" class="form-control" name="plantname" placeholder="plant name">
-				<br>
-				<input type="text" class="form-control" name="sciname" placeholder="scientific name">
-				<br><br>
-				<input type="file" id="fileInput" accept="image/*">
-				<br><br>
-				<input type="number" class="form-control" name="longitude" placeholder="longitude" step="0.000001">	
-				<input type="number" class="form-control" name="latitude" placeholder="latitude" step="0.000001">
-				<br><br>
-				<input type="text" class="form-control" name="desc" placeholder="description" height="5" width="50">
-				<br><br>
-                <input type="button" class="btn btn-default" id="submitPlant" value="Submit">
-    		</form>
-    	</div>
-        <div id="newuserarea">
-
-        </div>
 
     </div>
-    <a id="showPlantsButton" class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>
+    <a id="showPlantsButton" class="btn-floating btn-large waves-effect waves-light green" href="#newplantarea"><i class="material-icons">add</i></a>
     <div id="map">
     </div>
-
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQW3LF-fXuOs1OMEGQIlniUuWQluo6hLc&callback=initMap">
     </script>
+    <script src="https://cdn.firebase.com/libs/geofire/4.1.2/geofire.min.js"></script>
     <script
     src="https://code.jquery.com/jquery-2.2.4.min.js"
     integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
