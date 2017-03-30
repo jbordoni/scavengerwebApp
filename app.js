@@ -101,8 +101,8 @@ submitButton.addEventListener("click", function(){
 	var filesSelected = document.getElementById("fileInput").files;
 	var fileToLoad = filesSelected[0];
 	var postKey = plantsRef.push().key;
-	var lat = document.forms["plantform"]["latitude"].value;
-	var lng = document.forms["plantform"]["longitude"].value;
+	var lat = parseFloat(document.forms["plantform"]["latitude"].value);
+	var lng = parseFloat(document.forms["plantform"]["longitude"].value);
 	if (fileToLoad == null){
   		var plantObject = {
 			plantName: document.forms["plantform"]["plantname"].value,
@@ -224,7 +224,7 @@ plantsRef.on('value', function(snapshot){
 			userId: data.val().userId,
 			imgurl: data.val().imgurl,
 		};
-		var position = {lat: parseFloat(plantObject.latitude), lng: parseFloat(plantObject.longitude)}
+		var position = {lat: plantObject.latitude, lng: plantObject.longitude}
 			plantsArray.push(plantObject);
 			createMarker(plantObject);
 		});
