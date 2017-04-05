@@ -103,12 +103,14 @@ submitButton.addEventListener("click", function(){
 	var postKey = plantsRef.push().key;
 	var lat = parseFloat(document.forms["plantform"]["latitude"].value);
 	var lng = parseFloat(document.forms["plantform"]["longitude"].value);
+	var checked = document.forms["plantform"]["edible"].checked;
 	if (fileToLoad == null){
   		var plantObject = {
 			plantName: document.forms["plantform"]["plantname"].value,
 			sciName: document.forms["plantform"]["sciname"].value,
 			imgurl: null,
 			userId: currentUser.uid,
+			edible: checked,
 			longitude: lng,
 			latitude: lat,
 			desc: document.forms["plantform"]["desc"].value
@@ -133,6 +135,7 @@ submitButton.addEventListener("click", function(){
 				sciName: document.forms["plantform"]["sciname"].value,
 				imgurl: imgurl,
 				userId: currentUser.uid,
+				edible: checked,
 				longitude: lng,
 				latitude: lat,
 				desc: document.forms["plantform"]["desc"].value
@@ -153,6 +156,7 @@ function resetPlantArea(){
 	document.forms["plantform"]["sciname"].value = "";
 	document.forms["plantform"]["longitude"].value = "";
 	document.forms["plantform"]["latitude"].value = "";
+	document.forms["plantform"]["edible"].checked = false;
 	document.forms["plantform"]["desc"].value = "";
 	document.getElementById("fileInput").value = "";
 }
