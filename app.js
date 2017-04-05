@@ -41,6 +41,9 @@ signInArea.style.display = "none";
     $('.modal').modal();
  });
 
+$(document).ready(function(){
+    $('ul.tabs').tabs();
+  });
 
 
 //USER UPDATES
@@ -59,6 +62,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
     var providerData = user.providerData;
+    $("#youtab").removeClass("disabled");
     document.forms["signinform"]["email"].value = "";
     document.forms["signinform"]["password"].value = "";
     document.forms["newuserform"]["email"].value = "";
@@ -78,6 +82,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     signUpUserButton.style.display = "";
     signOutButton.style.display = "none";
     newPlantArea.style.display = "none";
+    $("#youtab").addClass("disabled");
+    $('ul.tabs').tabs('select_tab', 'listarea');
   }
 });
 
@@ -312,9 +318,10 @@ function createMarker(plantObject) {
 function displayPlants(){
 	plantsArray.forEach(function(plant){
 		//plantlist.append("<li>" + plant.plantName + "</li>");
-		plantlist.append('<div class="col s12 m7"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">More Info</a></div></div></div></div>');
+		plantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
 	});
 	addMoreInfoHandler();
+	addCenterMapHandler();
 }
 
 
@@ -330,6 +337,20 @@ function addMoreInfoHandler(){
 		});
 
  	});
+}
+
+function addCenterMapHandler(){
+	console.log("adding center map handlers");
+	$(".centermap").click(function(event){
+		var lat = parseFloat($(this).attr("lat"));
+		var lng = parseFloat($(this).attr("lng"));
+		var pos = {
+			lat: lat,
+			lng: lng
+		};
+		map.setCenter(pos);
+		map.setZoom(19);
+	});
 }
 
 

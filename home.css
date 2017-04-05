@@ -15,13 +15,15 @@ html, body {
 #sidebar {
   background: #004d40;
   float: left;
-  max-height: 93%;
+  height: 93%;
   overflow: auto;
   width: 30%;
   padding-left:20px;
   padding-right:20px;
   color:white;
 }
+
+
 
 #listarea {
   height: 65%;
@@ -70,4 +72,33 @@ html, body {
 
 label[data-error]:after {
   white-space: nowrap;
+}
+
+.tabs {
+  background-color: rgba(0,0,0,0);
+}
+
+.tabs .indicator {
+  background-color: white;
+}
+
+.tabs .tab a:hover {
+  color: white;
+}
+
+.tabs .tab a {
+  color: rgba(255,255,255,0.5);
+}
+
+.tabs .tab a.active {
+  color: white;
+}
+
+.tabs .tab.disabled a{
+  color: rgba(255,255,255,0.2);
+
+}
+
+.tabs .tab.disabled a:hover {
+  color: rgba(255,255,255,0.2);
 }

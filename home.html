@@ -4,9 +4,9 @@
     <title>Scavenger</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="home.css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="home.css">
 
     <script src="https://use.typekit.net/cke8vzm.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
@@ -145,13 +145,28 @@
     </div>
 
     <div id="sidebar" class="container">
-        <h3>Plants around you</h3>
-    	<div id="listarea">
-    		<h5 id="updateavail">Updates Available</h5>
-    		<div id="plantlist">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s6"><a href="#listarea">Nearby</a></li>
+                    <li class="tab col s6" id="youtab"><a href="#youarea">You</a></li>
+                </ul>
+            </div>
 
-    		</div>
-    	</div>
+            <div id="listarea" class="col s12">
+                <h5 id="updateavail">Updates Available</h5>
+                <div id="plantlist">
+
+                </div>
+            </div>
+            <div id="youarea" class="col 12">
+                Here.
+            </div>
+
+        </div>
+
+
+
     </div>
 
     <div id="detailmodal" class="modal">
@@ -159,7 +174,7 @@
             <div class="card-image detailImageContainer">
                 <img src="" id="detailImage">
             </div>
-            <h2 id="detailPlantName"></h2>
+            <h3 id="detailPlantName"></h3>
             <h5><i><span id="detailScientificName"></span></i></h5>
             <p id="detailPlantDescription"></p>
 
