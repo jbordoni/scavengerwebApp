@@ -41,6 +41,8 @@ signInArea.style.display = "none";
     $('.modal').modal();
  });
 
+
+
 //USER UPDATES
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -227,6 +229,7 @@ plantsRef.on('value', function(snapshot){
 			desc: data.val().desc,
 			userId: data.val().userId,
 			imgurl: data.val().imgurl,
+			plantId: data.key
 		};
 		var position = {lat: plantObject.latitude, lng: plantObject.longitude}
 			plantsArray.push(plantObject);
@@ -262,9 +265,22 @@ function createMarker(plantObject) {
 function displayPlants(){
 	plantsArray.forEach(function(plant){
 		//plantlist.append("<li>" + plant.plantName + "</li>");
-		plantlist.append('<div class="col s12 m7"><div class="card horizontal"><div class="card-image"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p><p>' + plant.desc + '</p></div><div class="card-action"><a href="#">More Info</a></div></div></div></div>');
-
+		plantlist.append('<div class="col s12 m7"><div class="card horizontal"><div class="card-image"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p><p>' + plant.desc + '</p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">More Info</a></div></div></div></div>');
 	});
+	addMoreInfoHandler();
+}
+
+
+
+function addMoreInfoHandler(){
+	console.log("adding handers");
+	$(".moreinfo").click(function(event){
+		plantsRef.child(event.target.id).once('value', function(snapshot){
+			$("#detailPlantName").text(snapshot.val().plantName);
+	 		$("#detailScientificName").text(snapshot.val().sciName);
+		});
+
+ 	});
 }
 
 
