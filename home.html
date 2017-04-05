@@ -88,25 +88,59 @@
     <div class="modal-content">
       <h2>Add New Plant</h2>
             <form name="plantform">
-                <input type="text" class="form-control" name="plantname" placeholder="plant name">
-                <br>
-                <input type="text" class="form-control" name="sciname" placeholder="scientific name">
-                <br><br>
-                <input type="file" id="fileInput" accept="image/*">
-                <br><br>
-                <input type="number" class="form-control" name="longitude" placeholder="longitude" step="0.000001"> 
-                <input type="number" class="form-control" name="latitude" placeholder="latitude" step="0.000001">
-                <br>
-                <input type="checkbox" class="form-control filled-in" id="edible">
-                <label for="edible">Is edible?</label>
-                <br><br>
-                <input type="text" class="form-control" name="desc" placeholder="description" height="5" width="50">
-                <br><br>
-                <input type="button" class="btn btn-default" id="submitPlant" value="Submit">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" class="form-control" name="plantname" id="pfplantname" placeholder="plant name">
+                        <label for="pfplantname" data-error="Please enter plant name"> Plant Name</label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" class="form-control" name="sciname" id="pfsciname" placeholder="scientific name">
+                        <label for="pfsciname" data-error="Please enter scientific name"> Scientific Name</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input type="number" class="form-control" name="longitude" placeholder="longitude" step="0.000001" id="pflongitude">
+                        <label for="pflongitude" data-error="Please enter valid longitude">Longitude</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="number" class="form-control" name="latitude" placeholder="latitude" step="0.000001" id="pflatitude">
+                        <label for="pflatitude" data-error="Please enter valid latitude">Latitude</label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="file-field input-field col s9">
+                        <div class="btn">
+                            <span>Select File</span>
+                            <input type="file" id="fileInput" accept="image/*">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" id="pffilepath" type="text">
+                            <label for="pffilepath" data-error="Please add an image"></label>
+                        </div>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="checkbox" class="form-control filled-in" id="edible">
+                        <label for="edible">Is edible?</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" class="form-control" name="desc" id="pfdesc" placeholder="description">
+                        <label for="pfdesc" data-error="Please enter a description">Description</label>
+                    </div>
+                </div>
             </form>
     </div>
         <div class="modal-footer">
-          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <input type="button" class="btn btn-default" id="submitPlant" value="Submit">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
         </div>
     </div>
 

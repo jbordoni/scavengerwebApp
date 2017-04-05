@@ -96,15 +96,62 @@ signUpUserButton.addEventListener("click", function(){
 });
 
 
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
+function removeInvalidClasses(){
+	$("#pflatitude").removeClass("invalid");
+	$("#pflongitude").removeClass("invalid");
+	$("#pfplantname").removeClass("invalid");
+	$("#pfsciname").removeClass("invalid");
+	$("#pfdesc").removeClass("invalid");
+	$("#pffilepath").removeClass("invalid");
+}
 
 //ADDING A NEW PLANT
 submitButton.addEventListener("click", function(){
+	removeInvalidClasses();
 	var filesSelected = document.getElementById("fileInput").files;
 	var fileToLoad = filesSelected[0];
 	var postKey = plantsRef.push().key;
-	var lat = parseFloat(document.forms["plantform"]["latitude"].value);
-	var lng = parseFloat(document.forms["plantform"]["longitude"].value);
+	var latvalue = document.forms["plantform"]["latitude"].value;
+	var lngvalue = document.forms["plantform"]["longitude"].value;
+	
+	//validation
+	var correct = true;
+
+	if(document.forms["plantform"]["plantname"].value == ""){
+		$("#pfplantname").addClass("invalid");
+		correct = false;
+	}
+	if(document.forms["plantform"]["sciname"].value == ""){
+		$("#pfsciname").addClass("invalid");
+		correct = false;
+	}
+	if(document.forms["plantform"]["desc"].value == ""){
+		$("#pfdesc").addClass("invalid");
+		correct = false;
+	}
+	if(!isNumber(latvalue)){
+		$("#pflatitude").addClass("invalid");
+		correct = false;
+	}
+	if(!isNumber(lngvalue)){
+		$("#pflongitude").addClass("invalid");
+		correct = false;
+	}
+	if(fileToLoad == null){
+		$("#pffilepath").addClass("invalid");
+		correct = false;
+	}
+
+	if(!correct){
+		return;
+	}
+
+	var lat = parseFloat(latvalue);
+	var lng = parseFloat(lngvalue);
 	var checked = document.forms["plantform"]["edible"].checked;
 	if (fileToLoad == null){
   		var plantObject = {
@@ -265,7 +312,7 @@ function createMarker(plantObject) {
 function displayPlants(){
 	plantsArray.forEach(function(plant){
 		//plantlist.append("<li>" + plant.plantName + "</li>");
-		plantlist.append('<div class="col s12 m7"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p><p>' + plant.desc + '</p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">More Info</a></div></div></div></div>');
+		plantlist.append('<div class="col s12 m7"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">More Info</a></div></div></div></div>');
 	});
 	addMoreInfoHandler();
 }
