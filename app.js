@@ -93,7 +93,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 //BUTTON ON/OFF CONTROLLERS
-
 showPlantsButton.addEventListener("click", function(){
 	newPlantArea.style.display = "";
 	signInArea.style.display = "none";
@@ -397,6 +396,7 @@ function addMoreInfoHandler(){
 	$(".moreinfo").click(function(event){
 		plantsRef.child(event.target.id).once('value', function(snapshot){
 			$("#detailImage").attr("src", snapshot.val().imgurl);
+			$("#detailImageLink").attr("href", snapshot.val().imgurl);
 			$("#detailPlantName").text(snapshot.val().plantName);
 	 		$("#detailScientificName").text(snapshot.val().sciName);
 	 		$("#detailPlantDescription").text(snapshot.val().desc);
