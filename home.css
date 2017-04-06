@@ -102,3 +102,9 @@ label[data-error]:after {
 .tabs .tab.disabled a:hover {
   color: rgba(255,255,255,0.2);
 }
+
+#detailEdible {
+  color: gray;
+  padding-top: 12px;
+  text-align: right;
+}

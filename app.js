@@ -2,6 +2,10 @@
 var dbRef = firebase.database().ref();
 var plantsRef = firebase.database().ref('plants');
 var geoFireRef = firebase.database().ref('plant_location');
+var plantNameRef = firebase.database().ref('plantName');
+var fbProvider = new firebase.auth.FacebookAuthProvider();
+
+fbProvider.addScope('email');
 
 var storage = firebase.storage();
 var storageRef = storage.ref();
@@ -44,6 +48,7 @@ signInArea.style.display = "none";
 $(document).ready(function(){
     $('ul.tabs').tabs();
   });
+
 
 
 //USER UPDATES
@@ -255,6 +260,30 @@ submitEmailForPassword.addEventListener("click", function(){
 	
 });
 
+//FACEBOOK LOG IN
+$("#fbLogIn").click(function(){
+	console.log("Got here");
+	firebase.auth().signInWithPopup(fbProvider).then(function(result) {
+	  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+	  var token = result.credential.accessToken;
+	  // The signed-in user info.
+	  var user = result.user;
+	  console.log(result);
+	  // ...
+	}).catch(function(error) {
+	  // Handle Errors here.
+	  var errorCode = error.code;
+	  var errorMessage = error.message;
+	  // The email of the user's account used.
+	  var email = error.email;
+	  // The firebase.auth.AuthCredential type that was used.
+	  var credential = error.credential;
+	  // ...
+	  console.log(error)
+	});
+});
+
+
 
 //SIGN OUT
 signOutButton.addEventListener("click", function(){
@@ -297,6 +326,43 @@ plantsRef.on('value', function(snapshot){
 });
 
 
+//AUTOCOMPLETE SETUP
+var plantNamesForAutofill = [];
+var plantNamesForOtherFill = [];
+
+function loadPlantNames(){
+	plantNameRef.once('value', function(snapshot){
+		snapshot.forEach(function(data){
+			var name = data.val()["Common Name"];
+			plantNamesForAutofill[name] = null;
+			plantNamesForOtherFill[name] = {isEdible:data.val()["Palatable Human"], sciName: data.val()["Scientific Name"]};
+		});
+		console.log("completed plant name array");
+		$('input.autocomplete').autocomplete({
+			data: plantNamesForAutofill,
+			limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+			onAutocomplete: function(val) {
+			   document.forms["plantform"]["sciname"].value = plantNamesForOtherFill[val]["sciName"];
+			   console.log(plantNamesForOtherFill[val]);
+			   if(plantNamesForOtherFill[val]["isEdible"]== "Yes"){
+			   		document.forms["plantform"]["edible"].checked = true;
+			   } else {
+			   		document.forms["plantform"]["edible"].checked = false;
+			   }
+			},
+			minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+		});
+		console.log("autocomplete complete");
+	});
+
+	
+}
+
+loadPlantNames();
+
+
+	
+
 
 function createMarker(plantObject) {
 	var position = {lat: parseFloat(plantObject.latitude), lng: parseFloat(plantObject.longitude)};
@@ -334,6 +400,12 @@ function addMoreInfoHandler(){
 			$("#detailPlantName").text(snapshot.val().plantName);
 	 		$("#detailScientificName").text(snapshot.val().sciName);
 	 		$("#detailPlantDescription").text(snapshot.val().desc);
+	 		if (snapshot.val().edible == true){
+	 			$("#detailEdible").text("EDIBLE");
+	 		} else {
+	 			$("#detailEdible").text("");
+	 		}
+	 		
 		});
 
  	});
@@ -352,6 +424,8 @@ function addCenterMapHandler(){
 		map.setZoom(19);
 	});
 }
+
+
 
 
 function initMap() {

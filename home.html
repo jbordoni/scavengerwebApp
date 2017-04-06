@@ -5,6 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="home.css">
 
@@ -48,6 +49,7 @@
                 <br>
                 <input type="button" class="btn btn-default" id="submitSignIn" value="Sign In">
                 <a type="button" class="waves-effect waves-light btn" href="#forgotpasswordarea" id="showForgotEmail">I forgot my password</a>
+                <a type="button" class="waves-effec waves-light btn" id="fbLogIn">Log In with Facebook</a>
             </form>
     </div>
     <div class="modal-footer">
@@ -77,6 +79,7 @@
                 <input type ="password" class="form-control" name="password" placeholder="password">
                 <br>
                 <input type="button" class="btn btn-default" id="submitNewUser" value="Create New User">
+                <a type="button" class="waves-effec waves-light btn" id="fbLogIn">Sign Up with Facebook</a>
             </form>
     </div>
         <div class="modal-footer">
@@ -90,14 +93,14 @@
             <form name="plantform">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input type="text" class="form-control" name="plantname" id="pfplantname" placeholder="plant name">
+                        <input type="text" class="form-control autocomplete" name="plantname" id="pfplantname" placeholder="plant name">
                         <label for="pfplantname" data-error="Please enter plant name"> Plant Name</label>
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="input-field col s12">
-                        <input type="text" class="form-control" name="sciname" id="pfsciname" placeholder="scientific name">
+                        <input disabled type="text" class="form-control" name="sciname" id="pfsciname" placeholder="scientific name">
                         <label for="pfsciname" data-error="Please enter scientific name"> Scientific Name</label>
                     </div>
                 </div>
@@ -125,7 +128,7 @@
                         </div>
                     </div>
                     <div class="input-field col s3">
-                        <input type="checkbox" class="form-control filled-in" id="edible">
+                        <input disabled type="checkbox" class="form-control filled-in" id="edible">
                         <label for="edible">Is edible?</label>
                     </div>
                 </div>
@@ -169,14 +172,22 @@
 
     </div>
 
-    <div id="detailmodal" class="modal">
+    <div id="detailmodal" class="modal modal-fixed-footer">
         <div class="modal-content">
             <div class="card-image detailImageContainer">
                 <img src="" id="detailImage">
             </div>
-            <h3 id="detailPlantName"></h3>
-            <h5><i><span id="detailScientificName"></span></i></h5>
-            <p id="detailPlantDescription"></p>
+            <br>
+            <div class="row">
+                <div class="col sm9"><h3 id="detailPlantName"></h3></div>
+                <div class="col sm3" align="right"><h6 id="detailEdible"></h6></div>
+            </div>
+            <div class="row">
+                <h5><i><span id="detailScientificName"></span></i></h5>
+            </div>
+            <div class="row">
+                <p id="detailPlantDescription"></p>
+            </div class="row">
 
         </div>
         <div class="modal-footer">
@@ -196,6 +207,7 @@
     src="https://code.jquery.com/jquery-2.2.4.min.js"
     integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
     crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
 
