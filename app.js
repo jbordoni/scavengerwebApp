@@ -14,6 +14,7 @@ var photosRef = storageRef.child("Photos");
 var plantsArray = [];
 
 var plantlist = $('#plantlist');
+var userplantlist = $("#userplantlist");
 
 var submitButton = document.getElementById("submitPlant");
 var updateavail = document.getElementById("updateavail");
@@ -79,7 +80,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     newUserArea.style.display = "none";
 	signOutButton.style.display = "";	
 	showPlantsButton.style.display = "";
-
+	getUserPlants();
   } else {
     currentUser = null;
     showPlantsButton.style.display = "none";
@@ -323,6 +324,40 @@ plantsRef.on('value', function(snapshot){
 	}
 	
 });
+
+
+//USER PLANTS PULL
+var userPlants = [];
+
+function getUserPlants(){
+	userPlants = [];
+	plantsRef.orderByChild("userId").equalTo(currentUser.uid).once('value', function(snapshot){
+		snapshot.forEach(function(userPlant){
+			var plantObject = {
+				plantName: userPlant.val().plantName,
+				sciName: userPlant.val().sciName,
+				longitude: userPlant.val().longitude,
+				latitude: userPlant.val().latitude,
+				desc: userPlant.val().desc,
+				userId: userPlant.val().userId,
+				imgurl: userPlant.val().imgurl,
+				plantId: userPlant.key
+			};
+			userPlants.push(plantObject);
+		});
+		displayUserPlants();
+	});
+}
+
+function displayUserPlants(){
+	//userplantlist.html("");
+	userPlants.forEach(function(plant){
+		userplantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
+	});
+	addMoreInfoHandler();
+	addCenterMapHandler();	
+}
+
 
 
 //AUTOCOMPLETE SETUP
