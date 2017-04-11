@@ -35,6 +35,8 @@ html, body {
 #scavengerlogo {
   font-family: Refrigerator Deluxe;
   padding-left: 20px;
+  font-weight: 400;
+  font-style: normal; 
 }
 
 #showPlantsButton {
