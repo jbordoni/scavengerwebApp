@@ -107,3 +107,11 @@ label[data-error]:after {
   padding-top: 12px;
   text-align: right;
 }
+
+#plantlistsearcharea {
+  background-color: white 
+}
+
+#plantlistsearchbutton {
+  margin-top: 20px;
+}

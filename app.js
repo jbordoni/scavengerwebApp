@@ -313,12 +313,12 @@ plantsRef.on('value', function(snapshot){
 			imgurl: data.val().imgurl,
 			plantId: data.key
 		};
-		var position = {lat: plantObject.latitude, lng: plantObject.longitude}
-			plantsArray.push(plantObject);
-			createMarker(plantObject);
-		});
-		displayPlants();
-		initialValuesSet = true;
+		var position = {lat: plantObject.latitude, lng: plantObject.longitude};
+		plantsArray.push(plantObject);
+		createMarker(plantObject);
+	});
+	displayPlants();
+	initialValuesSet = true;
 	} else {
 		updateavail.style.visibility = "visible";
 	}
