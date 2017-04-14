@@ -37,6 +37,8 @@ var newPlantArea = document.getElementById("newplantarea");
 var signInArea = document.getElementById("signinarea");
 var newUserArea = document.getElementById("newuserarea");
 
+var searchURL = "https://scavenger-web-app-elasticsearch-jbordoni.c9users.io/search?search=";
+
 newUserArea.style.display = "none";
 newPlantArea.style.display = "none";
 signInArea.style.display = "none";
@@ -282,6 +284,28 @@ $("#fbLogIn").click(function(){
 	  console.log(error)
 	});
 });
+
+var newSearch;
+
+//SEARCH FUNCTIONALITY FOR PLANT LIST
+$("#plantlistsearchbutton").click(function(){
+	var searchTerm = document.getElementById("plantlistsearch").value;
+	console.log("SEARCHING FOR: " + searchTerm);
+	newSearch = new XMLHttpRequest();
+	newSearch.open('GET', searchURL + searchTerm, true);
+	newSearch.onreadystatechange = processSearchRequest;
+	newSearch.send();
+});
+
+function processSearchRequest(e) {
+	console.log("entered processSearchRequest function");
+	if(newSearch.readyState == 4 && newSearch.status == 200){
+		var response = JSON.parse(newSearch.responseText);
+		console.log(response);
+	} else {
+		console.log("went into error");
+	}
+}
 
 
 
