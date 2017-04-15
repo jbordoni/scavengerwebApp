@@ -115,3 +115,7 @@ label[data-error]:after {
 #plantlistsearchbutton {
   margin-top: 20px;
 }
+
+#plantlistcancelsearchbutton {
+  margin-top: 20px;
+}
