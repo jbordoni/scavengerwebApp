@@ -463,7 +463,8 @@ function createMarker(plantObject) {
 		position: position,
 		map: map,
 		title: plantObject.plantName,
-		icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090'
+		icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090',
+		id: plantObject.plantId
 	});
 	marker.addListener('mouseover', function(){
 		currInfoWindow.setContent(marker.title);
@@ -471,6 +472,22 @@ function createMarker(plantObject) {
 	});
 	marker.addListener('mouseout', function(){
 		currInfoWindow.close();
+	});
+	marker.addListener('click', function(){
+		$("#detailmodal").modal('open');
+		plantsRef.child(marker.id).once('value', function(snapshot){
+			$("#detailImage").attr("src", snapshot.val().imgurl);
+			$("#detailImageLink").attr("href", snapshot.val().imgurl);
+			$("#detailPlantName").text(snapshot.val().plantName);
+	 		$("#detailScientificName").text(snapshot.val().sciName);
+	 		$("#detailPlantDescription").text(snapshot.val().desc);
+	 		if (snapshot.val().edible == true){
+	 			$("#detailEdible").text("EDIBLE");
+	 		} else {
+	 			$("#detailEdible").text("");
+	 		}
+	 		
+		});
 	});
 }
 
