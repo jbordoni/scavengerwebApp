@@ -208,8 +208,7 @@ submitButton.addEventListener("click", function(){
 			console.log(plantsRef.update(update));
 			geoFire.set(postKey, [parseFloat(lat), parseFloat(lng)]);
 			resetPlantArea();
-			displayPlants();
-			displayUserPlants();
+			getUserPlants();
 		});
 	}
 });
@@ -409,6 +408,7 @@ plantsRef.on('child_added', function(data){
 		var position = {lat: plantObject.latitude, lng: plantObject.longitude};
 		plantsArray.push(plantObject);
 		createMarker(plantObject);
+		updateDistancesAndSort(plantsArray);
 		displayPlants();
 	}
 
