@@ -411,7 +411,13 @@ function getUserPlants(){
 function displayUserPlants(){
 	userplantlist.html("");
 	userPlants.forEach(function(plant){
-		userplantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
+		var distance = getDistanceFromLatLonInKm(parseFloat(currLat), parseFloat(currLong), parseFloat(plant.latitude), parseFloat(plant.longitude));
+		if(distance > -1){
+			distance = distance.toFixed(2) + " km";
+		} else {
+			distance = "";
+		}
+		userplantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong>  <span class="distance">' +  distance + '</span></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
 	});
 	addMoreInfoHandler();
 	addCenterMapHandler();	
@@ -433,7 +439,7 @@ function loadPlantNames(){
 		console.log("completed plant name array");
 		$('input.autocomplete').autocomplete({
 			data: plantNamesForAutofill,
-			limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+			limit: 5, // The max amount of results that can be shown at once
 			onAutocomplete: function(val) {
 			   document.forms["plantform"]["sciname"].value = plantNamesForOtherFill[val]["sciName"];
 			   console.log(plantNamesForOtherFill[val]);
@@ -443,7 +449,7 @@ function loadPlantNames(){
 			   		document.forms["plantform"]["edible"].checked = false;
 			   }
 			},
-			minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+			minLength: 1, // The minimum length of the input for the autocomplete to start
 		});
 		console.log("autocomplete complete");
 	});
@@ -452,6 +458,8 @@ function loadPlantNames(){
 }
 
 loadPlantNames();
+
+
 
 
 	
@@ -494,8 +502,15 @@ function createMarker(plantObject) {
 function displayPlants(){
 	plantlist.html("");
 	plantsArray.forEach(function(plant){
-		//plantlist.append("<li>" + plant.plantName + "</li>");
-		plantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
+		var distance = getDistanceFromLatLonInKm(parseFloat(currLat), parseFloat(currLong), parseFloat(plant.latitude), parseFloat(plant.longitude));
+		if(distance > -1){
+			distance = distance.toFixed(2) + " km";
+		} else {
+			distance = "";
+		}
+
+		console.log(distance + "km");
+		plantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong>   <span class="distance">' +  distance + '</span></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
 	});
 	addMoreInfoHandler();
 	addCenterMapHandler();
@@ -538,7 +553,8 @@ function addCenterMapHandler(){
 }
 
 
-
+var currLat;
+var currLong;
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -564,6 +580,10 @@ function initMap() {
             map.setZoom(15);
             document.forms["plantform"]["longitude"].value = pos.lng;
             document.forms["plantform"]["latitude"].value = pos.lat;
+            currLat = pos.lat;
+            currLong = pos.lng;
+            displayPlants();
+            displayUserPlants();
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -579,6 +599,25 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setContent(browserHasGeolocation ?
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
+}
+
+//CALCULATE DISTANCES
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
 }
 
 

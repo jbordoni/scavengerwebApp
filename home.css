@@ -119,3 +119,10 @@ label[data-error]:after {
 #plantlistcancelsearchbutton {
   margin-top: 20px;
 }
+
+.distance {
+  color: gray;
+  font-style: italic;
+  text-align: right;
+  padding-right: 0px;
+}
