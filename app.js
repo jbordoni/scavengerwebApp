@@ -382,7 +382,7 @@ plantsRef.on('value', function(snapshot){
 	displayPlants();
 	initialValuesSet = true;
 	} else {
-		updateavail.style.visibility = "visible";
+		//updateavail.style.visibility = "visible";
 	}
 });
 
@@ -474,6 +474,14 @@ function loadPlantNames(){
 			minLength: 1, // The minimum length of the input for the autocomplete to start
 		});
 		console.log("autocomplete complete");
+
+		var position = {lat: currLat, lng: currLong};
+		var marker = new google.maps.Marker({
+			position: position,
+			map: map,
+			title: "this is a test",
+			icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090'
+		});
 	});
 
 	
