@@ -494,7 +494,7 @@ function createMarker(plantObject) {
 		position: position,
 		map: map,
 		title: plantObject.plantName,
-		// icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090',
+		icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090',
 		id: plantObject.plantId
 	});
 	marker.addListener('mouseover', function(){
