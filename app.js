@@ -208,7 +208,6 @@ submitButton.addEventListener("click", function(){
 			console.log(plantsRef.update(update));
 			geoFire.set(postKey, [parseFloat(lat), parseFloat(lng)]);
 			resetPlantArea();
-			createMarker(plantObject);
 			displayPlants();
 			displayUserPlants();
 		});
@@ -312,6 +311,7 @@ function processSearchRequest(e) {
 			newElem["plantId"] = indiv._id;
 			searchResults.push(newElem);
 		});
+		updateDistancesAndSort(searchResults);
 		displaySearchPlants();
 	} else {
 		if(newSearch.readyState == 4){
@@ -323,7 +323,13 @@ function processSearchRequest(e) {
 function displaySearchPlants(){
 	plantlist.html("");
 	searchResults.forEach(function(plant){
-		plantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
+		var distance = plant.distance;
+		if(distance > -1){
+			distance = distance.toFixed(2) + " km";
+		} else {
+			distance = "";
+		}
+		plantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'  </strong><span class="distance">' +  distance + '</span></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
 		console.log(plant.plantId);
 		console.log(plant.plantName);
 	});
@@ -373,7 +379,8 @@ plantsRef.on('value', function(snapshot){
 			desc: data.val().desc,
 			userId: data.val().userId,
 			imgurl: data.val().imgurl,
-			plantId: data.key
+			plantId: data.key,
+			distance: getDistanceFromLatLonInKm(parseFloat(currLat), parseFloat(currLong), parseFloat(data.val().latitude), parseFloat(data.val().longitude))
 		};
 		var position = {lat: plantObject.latitude, lng: plantObject.longitude};
 		plantsArray.push(plantObject);
@@ -406,6 +413,19 @@ plantsRef.on('child_added', function(data){
 
 });
 
+//UPDATE DISTANCES
+function updateDistancesAndSort(arrayOfPlants){
+	arrayOfPlants.forEach(function(plant){
+		plant["distance"] = getDistanceFromLatLonInKm(parseFloat(currLat), parseFloat(currLong), parseFloat(plant.latitude), parseFloat(plant.longitude));
+	});
+	//sort
+	arrayOfPlants.sort(sortByDistance);
+}
+
+function sortByDistance(a, b){
+	return a.distance - b.distance;
+}
+
 
 //USER PLANTS PULL
 var userPlants = [];
@@ -422,7 +442,8 @@ function getUserPlants(){
 				desc: userPlant.val().desc,
 				userId: userPlant.val().userId,
 				imgurl: userPlant.val().imgurl,
-				plantId: userPlant.key
+				plantId: userPlant.key,
+				distance: getDistanceFromLatLonInKm(parseFloat(currLat), parseFloat(currLong), parseFloat(userPlant.val().latitude), parseFloat(userPlant.val().longitude))
 			};
 			userPlants.push(plantObject);
 		});
@@ -433,7 +454,7 @@ function getUserPlants(){
 function displayUserPlants(){
 	userplantlist.html("");
 	userPlants.forEach(function(plant){
-		var distance = getDistanceFromLatLonInKm(parseFloat(currLat), parseFloat(currLong), parseFloat(plant.latitude), parseFloat(plant.longitude));
+		var distance = plant.distance;
 		if(distance > -1){
 			distance = distance.toFixed(2) + " km";
 		} else {
@@ -525,7 +546,7 @@ function createMarker(plantObject) {
 function displayPlants(){
 	plantlist.html("");
 	plantsArray.forEach(function(plant){
-		var distance = getDistanceFromLatLonInKm(parseFloat(currLat), parseFloat(currLong), parseFloat(plant.latitude), parseFloat(plant.longitude));
+		var distance = plant.distance;
 		if(distance > -1){
 			distance = distance.toFixed(2) + " km";
 		} else {
@@ -605,6 +626,8 @@ function initMap() {
             document.forms["plantform"]["latitude"].value = pos.lat;
             currLat = pos.lat;
             currLong = pos.lng;
+            updateDistancesAndSort(plantsArray);
+            updateDistancesAndSort(userPlants);
             displayPlants();
             displayUserPlants();
           }, function() {
