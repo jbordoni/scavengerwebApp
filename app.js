@@ -208,6 +208,9 @@ submitButton.addEventListener("click", function(){
 			console.log(plantsRef.update(update));
 			geoFire.set(postKey, [parseFloat(lat), parseFloat(lng)]);
 			resetPlantArea();
+			createMarker(plantObject);
+			displayPlants();
+			displayUserPlants();
 		});
 	}
 });
@@ -381,7 +384,26 @@ plantsRef.on('value', function(snapshot){
 	} else {
 		updateavail.style.visibility = "visible";
 	}
-	
+});
+
+plantsRef.on('child_added', function(data){
+	if(initialValuesSet == true){
+		var plantObject = {
+			plantName: data.val().plantName,
+			sciName: data.val().sciName,
+			longitude: data.val().longitude,
+			latitude: data.val().latitude,
+			desc: data.val().desc,
+			userId: data.val().userId,
+			imgurl: data.val().imgurl,
+			plantId: data.key
+		};
+		var position = {lat: plantObject.latitude, lng: plantObject.longitude};
+		plantsArray.push(plantObject);
+		createMarker(plantObject);
+		displayPlants();
+	}
+
 });
 
 
