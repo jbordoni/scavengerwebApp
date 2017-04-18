@@ -386,6 +386,7 @@ plantsRef.on('value', function(snapshot){
 		plantsArray.push(plantObject);
 		createMarker(plantObject);
 	});
+	updateDistancesAndSort(plantsArray);
 	displayPlants();
 	initialValuesSet = true;
 	} else {
@@ -447,6 +448,7 @@ function getUserPlants(){
 			};
 			userPlants.push(plantObject);
 		});
+		updateDistancesAndSort(userPlants);
 		displayUserPlants();
 	});
 }
@@ -553,7 +555,7 @@ function displayPlants(){
 			distance = "";
 		}
 
-		console.log(distance + "km");
+
 		plantlist.append('<div class="col s12"><div class="card horizontal"><div class="card-image side"><img src="'+ plant.imgurl +'"></div><div class="card-stacked"><div class="card-content"><p><strong>' + plant.plantName +'</strong>   <span class="distance">' +  distance + '</span></p><p><i>'+ plant.sciName +'</i></p></div><div class="card-action"><a class="moreinfo" id="'+ plant.plantId +'" href="#detailmodal">Info</a><a lat="' + plant.latitude + '" lng="' + plant.longitude + '" class="centermap">Center Map</a></div></div></div></div>');
 	});
 	addMoreInfoHandler();
