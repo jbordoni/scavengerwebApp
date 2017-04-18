@@ -475,13 +475,6 @@ function loadPlantNames(){
 		});
 		console.log("autocomplete complete");
 
-		var position = {lat: currLat, lng: currLong};
-		var marker = new google.maps.Marker({
-			position: position,
-			map: map,
-			title: "this is a test",
-			icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090'
-		});
 	});
 
 	
@@ -501,7 +494,7 @@ function createMarker(plantObject) {
 		position: position,
 		map: map,
 		title: plantObject.plantName,
-		icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090',
+		// icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|090',
 		id: plantObject.plantId
 	});
 	marker.addListener('mouseover', function(){
